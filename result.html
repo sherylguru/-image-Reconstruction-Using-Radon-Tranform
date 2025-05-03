@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radon Transform Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+    background: linear-gradient(135deg, #353935 0%, #1a1a1a 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+        .container {
+            background: rgba(255,255,255,0.25);
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.17);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 42px 30px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 32px 12px;
+        }
+        h1 {
+            color: #222;
+            font-size: 2.4rem;
+            margin-bottom: 1.2em;
+            letter-spacing: 1.2px;
+            text-align: center;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5em;
+            justify-content: center;
+            margin-bottom: 2.5em;
+        }
+        .card {
+            background: rgba(255,255,255,0.30);
+            border-radius: 20px;
+            box-shadow: 0 4px 16px 0 rgba(31,38,135,0.10);
+            padding: 1.2em 1em 1.8em 1em;
+            width: 320px;
+            max-width: 95vw;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.18s;
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.025);
+            box-shadow: 0 8px 24px 0 rgba(31,38,135,0.16);
+        }
+        .card img {
+            width: 256px;
+            height: 256px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px 0 rgba(31,38,135,0.09);
+            margin-bottom: 1em;
+            background: #fff;
+            display: block;
+        }
+        .card-title {
+            font-size: 1.08rem;
+            color: #2d2d2d;
+            font-weight: bold;
+            margin-bottom: 0.4em;
+        }
+        .card-desc {
+            color: #555;
+            font-size: 0.97rem;
+            margin-bottom: 0.2em;
+        }
+        .info-box {
+            background: rgba(255,255,255,0.17);
+            border-radius: 16px;
+            padding: 1.3em 1em;
+            color: #2d2d2d;
+            font-size: 1.05rem;
+            margin-bottom: 2em;
+            text-align: center;
+            box-shadow: 0 2px 8px 0 rgba(31,38,135,0.07);
+        }
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #4f8cff 0%, #a6ffcb 100%);
+            color: #fff;
+            border: none;
+            padding: 13px 36px;
+            border-radius: 30px;
+            font-size: 1.13rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px 0 rgba(31,38,135,0.09);
+        }
+        .back-btn:hover {
+            background: linear-gradient(90deg, #a6ffcb 0%, #4f8cff 100%);
+            box-shadow: 0 4px 16px 0 rgba(31,38,135,0.13);
+        }
+        @media (max-width: 1000px) {
+            .gallery {
+                flex-direction: column;
+                align-items: center;
+            }
+            .container {
+                padding: 20px 2vw;
+            }
+            .card img {
+                width: 90vw;
+                height: 90vw;
+                max-width: 256px;
+                max-height: 256px;
+            }
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 12px 1vw;
+            }
+            h1 {
+                font-size: 1.35rem;
+            }
+            .card {
+                width: 98vw;
+                padding: 0.7em 0.3em 1em 0.3em;
+            }
+            .card img {
+                width: 90vw;
+                height: 90vw;
+                max-width: 256px;
+                max-height: 256px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Radon Transform Results</h1>
+        <div class="gallery">
+            <div class="card">
+                <img src="{{ url_for('static', filename=original) }}" alt="Original Image">
+                <div class="card-title">Original Image</div>
+                <div class="card-desc">The image you uploaded for Radon analysis.</div>
+            </div>
+            <div class="card">
+                <img src="{{ url_for('static', filename=sinogram) }}" alt="Sinogram">
+                <div class="card-title">Sinogram (Radon Transform)</div>
+                <div class="card-desc">
+                    The <b>sinogram</b> visualizes projections of your image at multiple angles.<br>
+                    Each column is a sum along a line at a specific angle.
+                </div>
+            </div>
+            <div class="card">
+                <img src="{{ url_for('static', filename=reconstructed) }}" alt="Reconstructed Image">
+                <div class="card-title">Reconstructed Image</div>
+                <div class="card-desc">
+                    The image reconstructed from the sinogram using the inverse Radon transform.<br>
+                    This is how CT and tomography rebuild images from projections.
+                </div>
+            </div>
+        </div>
+        <div class="info-box">
+            <b>What is the Radon Transform?</b><br>
+            The Radon transform is used in medical imaging and tomography. It converts images into a set of projections (sinogram), which can then be used to reconstruct the original image - just like in CT scans.
+        </div>
+        <a href="/" class="back-btn">Process Another Image</a>
+    </div>
+</body>
+</html>

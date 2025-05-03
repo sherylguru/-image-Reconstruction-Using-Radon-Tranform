@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Objectives</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>CT Scan Reconstruction Project</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('aim') }}">Aim</a></li>
+                <li><a href="{{ url_for('objective') }}" class="active">Objectives</a></li>
+                <li><a href="{{ url_for('simulation') }}">Simulation</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <h2>Project Objectives</h2>
+            <ul>
+                <li>To demonstrate the mathematical principles behind CT scan reconstruction</li>
+                <li>To visualize the Radon transform and its inverse in action</li>
+                <li>To provide an interactive tool for understanding how different projection angles affect image reconstruction</li>
+                <li>To illustrate the importance of sufficient angular sampling in CT imaging</li>
+                <li>To show the practical application of image processing techniques in medical imaging</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

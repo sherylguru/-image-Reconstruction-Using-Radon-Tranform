@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Aim</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>CT Scan Reconstruction Project</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('aim') }}" class="active">Aim</a></li>
+                <li><a href="{{ url_for('objective') }}">Objectives</a></li>
+                <li><a href="{{ url_for('simulation') }}">Simulation</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <h2>Project Aim</h2>
+            <p>This project aims to demonstrate the principles of computed tomography (CT) reconstruction using the Radon transform and its inverse. CT scanning is a critical medical imaging technique that allows for non-invasive visualization of internal structures.</p>
+            <p>Through this web application, users can understand how 2D images are transformed into sinograms (projections at different angles) and then reconstructed back into images, mimicking the process used in actual CT scanners in medical facilities.</p>
+        </div>
+    </div>
+</body>
+</html>

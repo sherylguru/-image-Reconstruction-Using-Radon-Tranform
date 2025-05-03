@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radon Image Reconstruction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #353935 0%, #1a1a1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .glass-card {
+            position: relative;
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.18);
+            padding: 48px 36px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+        .top-right-logo {
+            max-width: 200px;
+            height: auto;
+        }
+        .corner-logo {
+            width: 80px;
+            height: auto;
+        }
+        h1 {
+            font-size: 2.3rem;
+            margin-bottom: 0.5em;
+            color: #E0E0E0;
+            letter-spacing: 1.2px;
+        }
+        h2 {
+            font-size: 1.5rem;
+            color: #E0E0E0;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #B0B0B0;
+            margin-bottom: 2em;
+        }
+        .file-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5em;
+        }
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        .file-upload label {
+            background: linear-gradient(90deg, #353935 0%, #555755 100%);
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 1em;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        .file-upload label:hover {
+            background: linear-gradient(90deg, #555755 0%, #353935 100%);
+        }
+        .file-upload .filename {
+            color: #B0B0B0;
+            font-size: 0.95rem;
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+        button {
+            background: linear-gradient(90deg, #353935 0%, #555755 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 1em;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #555755 0%, #353935 100%);
+        }
+        .error {
+            color: #ff5252;
+            margin-bottom: 1em;
+            font-weight: bold;
+        }
+        .section {
+            margin-top: 2em;
+            background: rgba(255,255,255,0.10);
+            padding: 1.5em 1em;
+            border-radius: 18px;
+            color: #D0D0D0;
+            font-size: 1rem;
+            text-align: left;
+        }
+        .section ul, .section ol {
+            margin: 1em 0 0 1em;
+            padding-left: 1em;
+        }
+        .section li {
+            margin-bottom: 0.5em;
+        }
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5em;
+            flex-wrap: wrap;
+        }
+        .tab-button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .tab-button.active {
+            background: linear-gradient(90deg, #353935 0%, #555755 100%);
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @media (max-width: 600px) {
+            .glass-card {
+                padding: 24px 8px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .logo-container {
+                top: 10px;
+                right: 10px;
+            }
+            .corner-logo {
+                width: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-card">
+        <div class="logo-container">
+            <img src="srm-logo.jpg" class="top-right-logo">
+        </div>
+        
+        <h1>Radon Image <br>Reconstruction</h1>
+        
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openTab('aim')">Aim</button>
+            <button class="tab-button" onclick="openTab('objective')">Objectives</button>
+            <button class="tab-button" onclick="openTab('procedure')">Procedure</button>
+            <button class="tab-button" onclick="openTab('simulation')">Simulation</button>
+        </div>
+        
+        <div id="aim" class="tab-content active">
+            <div class="subtitle">Project Aim</div>
+            <div class="section">
+                <p>This project aims to demonstrate the principles of computed tomography (CT) through the implementation of the Radon transform and its inverse.</p>
+                <p>CT scanning is a critical medical imaging technique that allows for non-invasive visualization of internal structures. By understanding how 2D images are transformed into sinograms (projections at different angles) and then reconstructed back into images, users can gain insight into the mathematical foundations of modern medical imaging.</p>
+            </div>
+        </div>
+        
+        <div id="objective" class="tab-content">
+            <div class="subtitle">Project Objectives</div>
+            <div class="section">
+                <ul>
+                    <li>To demonstrate the mathematical principles behind CT scan reconstruction</li>
+                    <li>To visualize the Radon transform and its inverse in action</li>
+                    <li>To provide an interactive tool for understanding projection angles</li>
+                    <li>To illustrate the importance of sufficient angular sampling in CT imaging</li>
+                    <li>To show the practical application of image processing techniques in medical imaging</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="procedure" class="tab-content">
+            <div class="subtitle">Procedure</div>
+            <div class="section">
+                <ol>
+                    <li>Select an image file from your device by clicking the "Choose Image" button in the Simulation tab.</li>
+                    <li>The image will be converted to grayscale for processing.</li>
+                    <li>The Radon transform will be applied to create a sinogram, which represents projections of the image at different angles.</li>
+                    <li>The inverse Radon transform will then reconstruct the original image from these projections.</li>
+                    <li>The results will display the original image, the sinogram, and the reconstructed image for comparison.</li>
+                    <li>You can observe how the reconstruction quality depends on the number of projection angles used.</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div id="simulation" class="tab-content">
+            <div class="subtitle">
+                Upload an image to see its Radon transform and reconstruction in style!
+            </div>
+            {% if error %}
+            <div class="error">{{ error }}</div>
+            {% endif %}
+            <form action="/process" method="post" enctype="multipart/form-data" id="uploadForm">
+                <div class="file-upload">
+                    <label for="fileInput">Choose Image</label>
+                    <input type="file" id="fileInput" name="image" accept="image/*" required>
+                    <span class="filename" id="filename"></span>
+                </div>
+                <button type="submit">Process Image</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Show selected filename
+        const fileInput = document.getElementById('fileInput');
+        const filename = document.getElementById('filename');
+        const label = document.querySelector('label[for="fileInput"]');
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files.length > 0) {
+                filename.textContent = fileInput.files[0].name;
+                label.textContent = "Change Image";
+            } else {
+                filename.textContent = '';
+                label.textContent = "Choose Image";
+            }
+        });
+        
+        // Tab functionality
+        function openTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Remove active class from all buttons
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            // Show the selected tab content and activate the button
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
